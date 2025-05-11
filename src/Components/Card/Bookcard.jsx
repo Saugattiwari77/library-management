@@ -5,18 +5,30 @@ import { CiShoppingCart } from "react-icons/ci";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import bookImage from "./book.jpg";
-import { useWishlist } from "../../context/WishlistContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../store/slices/cartSlice';
+import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlistSlice';
+import { toast } from "react-toastify";
 
 function Bookcard({ book }) {
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  const isWishlisted = isInWishlist(book?.id);
+  const dispatch = useDispatch();
+  const wishlistItems = useSelector(state => state.wishlist.items);
+  const isWishlisted = wishlistItems.some(item => item.id === book?.id);
 
   const handleWishlistClick = () => {
     if (isWishlisted) {
-      removeFromWishlist(book.id);
+      dispatch(removeFromWishlist(book.id));
     } else {
-      addToWishlist(book);
+      dispatch(addToWishlist(book));
     }
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(book));
+    toast.success("Book added to cart!", {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
   };
 
   return (
@@ -66,7 +78,10 @@ function Bookcard({ book }) {
 
         <div className="d-flex justify-content-between align-items-center mt-auto">
           <span className="badge bg-success">{book?.stock || "IN STOCK"}</span>
-          <button className="btn btn-outline-primary">
+          <button 
+            className="btn btn-outline-primary"
+            onClick={handleAddToCart}
+          >
             <CiShoppingCart size={20} />
           </button>
         </div>

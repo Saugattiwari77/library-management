@@ -1,34 +1,34 @@
-import React from 'react';
-import { useWishlist } from '../../context/WishlistContext';
-import Bookcard from '../../Components/Card/Bookcard';
-import './index.css';
+import React from "react";
+import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
+import Bookcard from "../../Components/Card/Bookcard";
+import "./index.css";
 
-const Wishlist = () => {
-  const { wishlist } = useWishlist();
+function Wishlist() {
+  const wishlistItems = useSelector(state => state.wishlist.items);
+
+  if (wishlistItems.length === 0) {
+    return (
+      <div className="empty-wishlist">
+        <h2>Your wishlist is empty</h2>
+        <p>Looks like you haven't added any books to your wishlist yet.</p>
+        <Link to="/" className="btn btn-primary">
+          Browse Books
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="wishlist-container">
-      <h1 className="wishlist-title">My Wishlist</h1>
-      
-      {wishlist.length === 0 ? (
-        <div className="empty-wishlist">
-          <p>Your wishlist is empty</p>
-          <button 
-            className="btn btn-primary"
-            onClick={() => window.location.href = '/'}
-          >
-            Browse Books
-          </button>
-        </div>
-      ) : (
-        <div className="wishlist-grid">
-          {wishlist.map((book) => (
-            <Bookcard key={book.id} book={book} />
-          ))}
-        </div>
-      )}
+      <h2 className="wishlist-title">My Wishlist</h2>
+      <div className="wishlist-grid">
+        {wishlistItems.map((book) => (
+          <Bookcard key={book.id} book={book} />
+        ))}
+      </div>
     </div>
   );
-};
+}
 
 export default Wishlist;
