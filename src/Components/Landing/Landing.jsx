@@ -1,5 +1,5 @@
 import React from "react";
-import Homepage from "../../Pages/Home/Homepage";
+// import Homepage from "../../Pages/Home/Homepage";
 import Bookcard from "../Card/Bookcard";
 import Carouselimg from "../../Pages/Home/Carousel";
 
@@ -13,7 +13,8 @@ const Landing = () => {
       rating: 4.5,
       reviews: 24,
       stock: "IN STOCK",
-      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: 2,
@@ -23,7 +24,8 @@ const Landing = () => {
       rating: 4.2,
       reviews: 18,
       stock: "IN STOCK",
-      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop"
+      image:
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop",
     },
     {
       id: 3,
@@ -33,8 +35,9 @@ const Landing = () => {
       rating: 4.8,
       reviews: 32,
       stock: "IN STOCK",
-      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop"
-    }
+      image:
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000&auto=format&fit=crop",
+    },
   ];
 
   return (
