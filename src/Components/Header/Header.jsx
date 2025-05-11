@@ -37,8 +37,9 @@ const Navbar = () => {
             <Link to="/wishlist">
               <button className="btn-admin">Wishlist</button>
             </Link>
-
-            <button className="btn-login">Log in</button>
+            <Link to="/login">
+              <button className="btn-login">Log in</button>
+            </Link>
           </div>
         </nav>
       </div>

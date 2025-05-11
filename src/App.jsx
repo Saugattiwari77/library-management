@@ -28,12 +28,12 @@ function App() {
           <ToastContainer />
           <Header />
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/Landing" element={<Landing />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="*" element={<Login />} /> {/* fallback to login */}
             <Route path="/AdminDashboard" element={<AdminDashboard />} />
             {/* <Route path="/login" element={<Login />} />

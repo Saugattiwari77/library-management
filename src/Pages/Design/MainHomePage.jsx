@@ -141,7 +141,7 @@ const HomePage = () => {
             <h1 className="title-animate">PathsalaNepal</h1>
             <p className="tagline">Padna Pani, Badhna Pani</p>
             <div className="cta-container">
-              <a href="/login" className="cta-button">
+              <a href="/Landing" className="cta-button">
                 Explore Now
                 <span className="cta-arrow">→</span>
               </a>
