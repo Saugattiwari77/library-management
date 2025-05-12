@@ -17,18 +17,18 @@ const Navbar = () => {
             <a href="/" className="nav-link active">
               Home
             </a>
-            <a href="/books" className="nav-link">
-              Books
+            <a href="/contact" className="nav-link">
+              Contact us
             </a>
-            <a href="/members" className="nav-link">
-              Members
-            </a>
-            <a href="/transactions" className="nav-link">
-              Transactions
-            </a>
-            <a href="/reports" className="nav-link">
+            <a href="/report" className="nav-link">
               Reports
             </a>
+            <a href="/about" className="nav-link">
+              About us
+            </a>
+            {/* <a href="/reports" className="nav-link">
+              Reports
+            </a> */}
           </div>
           <div className="navbar-auth">
             <Link to="/cart">
@@ -39,6 +39,12 @@ const Navbar = () => {
             </Link>
             <Link to="/login">
               <button className="btn-login">Log in</button>
+            </Link>
+            <Link to="/settings">
+              <button className="btn-login">Settings</button>
+            </Link>
+            <Link to="/logout">
+              <button className="btn-login">Log out</button>
             </Link>
           </div>
         </nav>

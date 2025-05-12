@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "../LogOut/logout.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const LogoutPage = () => {
   const [countdown, setCountdown] = useState(3);
   const [fadeOut, setFadeOut] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Clear user session/token info
     localStorage.clear(); // Or remove specific tokens

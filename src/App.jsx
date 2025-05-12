@@ -17,6 +17,11 @@ import Signup from "./Pages/SignUp/Signup";
 import Login from "./Pages/Login/login";
 import AdminDashboard from "./Pages/Admin/AdminPage";
 import HomePage from "./Pages/Design/MainHomePage";
+import ReportsPage from "./Pages/Report/Report";
+import ContactUs from "./Pages/Contact Us/ContactUs";
+import AboutUs from "./Pages/AboutUs/AboutUs";
+import SettingsPage from "./Pages/Settings/Setting";
+import LogoutPage from "./Pages/LogOut/Logout";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -36,6 +41,12 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<Login />} /> {/* fallback to login */}
             <Route path="/AdminDashboard" element={<AdminDashboard />} />
+            <Route path="/report" element={<ReportsPage />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/logout" element={<LogoutPage />} />
+            {/* <Route path="/report" element={<ReportsPage />} /> */}
             {/* <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
     <Route path="/books" element={<Books />} />

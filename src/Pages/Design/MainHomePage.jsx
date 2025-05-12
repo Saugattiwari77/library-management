@@ -271,7 +271,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <footer className="footer">
+      {/* <footer className="footer">
         <p>© 2025 PathsalaNepal - Transforming Education in Nepal</p>
         <div className="footer-links">
           <a href="#" className="footer-link">
@@ -287,7 +287,7 @@ const HomePage = () => {
             Privacy Policy
           </a>
         </div>
-      </footer>
+      </footer> */}
 
       <style jsx>{`
         .home-container {
