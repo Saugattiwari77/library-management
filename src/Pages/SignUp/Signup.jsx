@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "/logo.png"; // Adjust the path to your logo image
+import { toast } from "react-toastify";
+import axios from "axios";
+// import './Signup.css';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     fullName: "",
     email: "",
     password: "",
-    confirmPassword: "",
     phone: "",
     userType: "",
     agreed: false,
+    address: "",
+    dateOfBirth: "",
   });
 
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 2;
+  const [loading, setLoading] = useState(false);
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -32,12 +38,12 @@ const Signup = () => {
       if (!form.fullName) errs.fullName = "Full Name is required";
       if (!form.email) errs.email = "Email is required";
       if (!form.phone) errs.phone = "Phone number is required";
+      if (!form.address) errs.address = "Address is required";
+      if (!form.dateOfBirth) errs.dateOfBirth = "Date of Birth is required";
     }
 
     if (step === 2 || step === "all") {
       if (!form.password) errs.password = "Password is required";
-      if (form.password !== form.confirmPassword)
-        errs.confirmPassword = "Passwords do not match";
       if (!form.userType) errs.userType = "Please select a user type";
       if (!form.agreed) errs.agreed = "You must accept terms";
     }
@@ -56,11 +62,54 @@ const Signup = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate("all")) {
-      alert("Signup successful (frontend only)!");
-      console.log("User Data:", form);
+
+    // Validation
+    if (form.password.length < 6) {
+      toast.error("Password must be at least 6 characters long!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://27b8-2400-1a00-b040-e51a-28e3-447c-db10-31d7.ngrok-free.app/api/Member",
+        {
+          firstName: form.fullName.split(" ")[0],
+          lastName: form.fullName.split(" ")[1] || "",
+          address: form.address,
+          dateOfBirth: form.dateOfBirth,
+          gender:
+            parseInt(form.userType) === 1
+              ? 1
+              : parseInt(form.userType) === 2
+              ? 2
+              : 3,
+          email: form.email,
+          password: form.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "text/plain",
+          },
+        }
+      );
+
+      console.log("saugat", response);
+
+      if (response.status === 200) {
+        toast.success("Signup successful!");
+        navigate("/login");
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data || "An error occurred. Please try again.";
+      toast.error(errorMessage);
+      console.error("Signup error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,6 +169,18 @@ const Signup = () => {
                     type: "text",
                     placeholder: "+977 98xxxxxxxx",
                   },
+                  {
+                    label: "Address",
+                    name: "address",
+                    type: "text",
+                    placeholder: "Enter your address",
+                  },
+                  {
+                    label: "Date of Birth",
+                    name: "dateOfBirth",
+                    type: "date",
+                    placeholder: "Select your date of birth",
+                  },
                 ].map(({ label, name, type, placeholder }) => (
                   <div key={name} className="form-group">
                     <label>{label}</label>
@@ -173,21 +234,6 @@ const Signup = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Confirm Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={form.confirmPassword}
-                    onChange={handleChange}
-                    className={errors.confirmPassword ? "input-error" : ""}
-                    placeholder="Confirm your password"
-                  />
-                  {errors.confirmPassword && (
-                    <p className="error">{errors.confirmPassword}</p>
-                  )}
-                </div>
-
-                <div className="form-group">
                   <label>User Type</label>
                   <select
                     name="userType"
@@ -196,30 +242,13 @@ const Signup = () => {
                     className={errors.userType ? "input-error" : ""}
                   >
                     <option value="">Select your role</option>
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                    <option value="admin">Admin</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                    <option value="3">Other</option>
                   </select>
                   {errors.userType && (
                     <p className="error">{errors.userType}</p>
                   )}
-                </div>
-
-                <div className="form-group agree-terms">
-                  <div className="remember-me">
-                    <input
-                      type="checkbox"
-                      id="agreed"
-                      name="agreed"
-                      checked={form.agreed}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="agreed">
-                      I agree to the <a href="/terms">terms</a> and{" "}
-                      <a href="/privacy">privacy policy</a>
-                    </label>
-                  </div>
-                  {errors.agreed && <p className="error">{errors.agreed}</p>}
                 </div>
 
                 <div className="form-actions">
@@ -230,8 +259,12 @@ const Signup = () => {
                   >
                     <span className="arrow">←</span> Back
                   </button>
-                  <button type="submit" className="signup-button">
-                    <span>Create Account</span>
+                  <button
+                    type="submit"
+                    className="signup-button"
+                    disabled={loading}
+                  >
+                    {loading ? "Signing up..." : "Sign Up"}
                   </button>
                 </div>
               </div>
